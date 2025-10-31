@@ -9,6 +9,8 @@ function displayKeys() {
       keyClass = 'js-clear-button calculator-button'
     } else if (key === '00') {
       keyClass = 'js-button calculator-button twoColumn'
+    } else if (key === 'c') {
+      keyClass = 'js-button calculator-button c-button'
     } else {
       keyClass = 'js-button calculator-button'
     }
