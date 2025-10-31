@@ -1,14 +1,20 @@
 // 1. Creating buttons and displaying
-const keys = ["1", "2", "3", "c", "4", "5", "6", "+", "7", "8", "9", "-", "/", "0", "*", ".", "00", "="];
+const keys = ["1", "2", "3", "x", "4", "5", "6", "c", "7", "8", "9", "+", "/", "0", "*", "-", "00", ".", "="];
 const keysContainer = document.querySelector(".js-keys-container");
 
 function displayKeys() {
   keys.map((key) => {
-    const keyClass = (key === "00" || key === "=") 
-    ? "js-button calculator-button twoColumn" 
-    : "js-button calculator-button";
-    const html = 
-    `
+    let keyClass = '';
+    if (key === 'x') {
+      keyClass = 'js-clear-button calculator-button'
+    } else if (key === '00') {
+      keyClass = 'js-button calculator-button twoColumn'
+    } else {
+      keyClass = 'js-button calculator-button'
+    }
+
+    const html =
+      `
       <button class="${keyClass}"
       value=${key}
       >${key === "*"
@@ -21,8 +27,6 @@ function displayKeys() {
 }
 
 displayKeys();
-
-
 
 
 // 2. Making button interactive
@@ -41,11 +45,11 @@ function createExpression(value) {
   const html = `
   <div class="js-number"
   data-button-value=${value}>${value === "*"
-    ? "x"
-    : value
-  }</div>
+      ? "x"
+      : value
+    }</div>
   `
-  if(isCalculationMade) {
+  if (isCalculationMade) {
     clearScreen();
     expressionElement.innerHTML = html;
   } else {
@@ -54,13 +58,10 @@ function createExpression(value) {
 }
 
 
-
-
-
 function checkAndCreateExpression(value) {
-  if(value === "c") {
+  if (value === "c") {
     clearScreen();
-  } else if(value === "=") {
+  } else if (value === "=") {
     performCalculation();
   } else if (["+", "-", "/", "*"].includes(value)) {
     if (isCalculationMade) {
@@ -69,20 +70,18 @@ function checkAndCreateExpression(value) {
       const html = `
       <div class="js-number"
       data-button-value=${value}>${value === "*"
-        ? "x"
-        : value
-      }</div>
+          ? "x"
+          : value
+        }</div>
     `
-    expressionElement.innerHTML += html;
+      expressionElement.innerHTML += html;
     } else {
       createExpression(value);
     }
   } else {
     createExpression(value);
-  } 
+  }
 }
-
-
 
 
 buttons.forEach((button) => {
@@ -94,7 +93,7 @@ buttons.forEach((button) => {
 
 // 3. Performing Calculations
 function performCalculation() {
-  if(!isCalculationMade) {
+  if (!isCalculationMade) {
     let result = 0;
     let expression = resultElement.innerText;
     document.querySelectorAll(".js-number")
@@ -109,31 +108,36 @@ function performCalculation() {
 }
 
 
-
-
-
-
-
-
 // 4. making keyboard buttons interactive
 document.body.addEventListener('keydown', (event) => {
-  if(keys.includes(event.key)) {
-    checkAndCreateExpression(event.key);
+  if(event.key === 'Enter' || event.key === '=') {
+    performCalculation();
   } else if(event.key === 'Backspace') {
     erase();
+  } else if(keys.includes(event.key)) {
+    checkAndCreateExpression(event.key);
   }
 });
 
 // 5. backspace
 function erase() {
+  if(isCalculationMade) {
+    return;
+  }
   const numbers = document.querySelectorAll(".js-number");
-  if(numbers.length > 0) {
-    numbers[numbers.length -1].remove();
+  if (numbers.length > 0) {
+    numbers[numbers.length - 1].remove();
   }
 }
 
 
-
+// backspace with button
+const backspaceBtnElem = document.querySelector('.js-clear-button');
+backspaceBtnElem.addEventListener('click', () => {
+  if(!isCalculationMade) {
+    erase();
+  }
+});
 
 
 
@@ -143,7 +147,7 @@ const lightSwitch = document.querySelector('.js-light');
 const screen = document.querySelector('.js-screen');
 
 lightSwitch.addEventListener('click', () => {
-  if(isLightOn) {
+  if (isLightOn) {
     screen.style.backgroundColor = '#222';
     isLightOn = false;
   } else {
