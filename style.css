@@ -79,4 +79,8 @@ body {
   bottom: 3px;
   left: 150px;
   cursor: pointer;
+
 }
+
+.js-clear-button {
+  color: red;
