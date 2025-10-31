@@ -1,22 +1,26 @@
 <html>
   <head>
     <title>Calculator</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS link -->
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div class="main-container">
+      <div class="calculator">
+        <button class="js-light"></button>
 
-    <div class="calculator">
-      <button class="js-light"></button>
+        <div class="js-screen screen">
+          <div class="js-expression expression"></div>
+          <div class="js-result result"></div>
+        </div>
 
-      <div class="js-screen screen">
-        <div class="js-expression expression"></div>
-        <div class="js-result result"></div>
+        <div class="js-keys-container keys-container"></div>
+
       </div>
-
-      <div class="js-keys-container keys-container"></div>
-
     </div>
-
     <!-- Script to use math.evaluate -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
 
