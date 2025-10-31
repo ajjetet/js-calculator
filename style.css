@@ -91,3 +91,7 @@ body, html {
 .js-clear-button {
   color: red;
 }
+
+.c-button {
+  color: blue;
+}
