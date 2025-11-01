@@ -61,9 +61,17 @@ function createExpression(value) {
 
 // check expression limit
 function checkLimit() {
+  const calculator = document.querySelector('.js-calculator');
+  const calculatorWidthString = getComputedStyle(calculator).width;
+  const calculatorWidthNum = parseInt(calculatorWidthString);
+
   const firstChildElement = expressionElement.firstElementChild || '';
   if(firstChildElement) {
-    if(firstChildElement.innerText.length + expressionElement.children.length >= 24) {
+    if(
+      calculatorWidthNum > 400
+      ? firstChildElement.innerText.length + expressionElement.children.length >= 24
+      : firstChildElement.innerText.length + expressionElement.children.length >= 20
+    ) {
       return true;
     } else {
       return false;
