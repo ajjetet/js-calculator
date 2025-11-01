@@ -59,6 +59,19 @@ function createExpression(value) {
   }
 }
 
+// check expression limit
+function checkLimit() {
+  const firstChildElement = expressionElement.firstElementChild || '';
+  if(firstChildElement) {
+    if(firstChildElement.innerText.length + expressionElement.children.length >= 24) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return false;
+}
+
 
 function checkAndCreateExpression(value) {
   if (value === "c") {
@@ -66,9 +79,17 @@ function checkAndCreateExpression(value) {
   } else if (value === "=") {
     performCalculation();
   } else if (["+", "-", "/", "*"].includes(value)) {
+    if(resultElement.innerText === 'Error') {
+      return;
+    }
+
     if (isCalculationMade) {
       isCalculationMade = false;
-      expressionElement.innerHTML = resultElement.innerHTML;
+      expressionElement.innerHTML = `
+        <div class="js-number" data-button-value=${resultElement.innerText}>
+          ${resultElement.innerHTML}
+        </div>
+      `;
       const html = `
       <div class="js-number"
       data-button-value=${value}>${value === "*"
@@ -78,9 +99,17 @@ function checkAndCreateExpression(value) {
     `
       expressionElement.innerHTML += html;
     } else {
+      const expressionLimit = checkLimit();
+      if(expressionLimit) {
+        return;
+      }
       createExpression(value);
     }
   } else {
+      const expressionLimit = checkLimit();
+      if(expressionLimit) {
+        return;
+      }
     createExpression(value);
   }
 }
@@ -97,16 +126,20 @@ buttons.forEach((button) => {
 function performCalculation() {
   if (!isCalculationMade) {
     let result = 0;
-    let expression = resultElement.innerText;
+    let expression = '';
     document.querySelectorAll(".js-number")
       .forEach((number) => {
         expression += number.dataset.buttonValue;
       });
-    console.log(expression);
-    result = math.evaluate(expression);
+    try {
+      result = math.evaluate(expression);
+    } catch (error) {
+      console.log(error);
+      result = 'Error'
+    }
     resultElement.innerHTML = result;
   }
-  isCalculationMade = true;
+      isCalculationMade = true;
 }
 
 
