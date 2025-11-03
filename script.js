@@ -70,7 +70,7 @@ function checkLimit() {
     if(
       calculatorWidthNum > 400
       ? firstChildElement.innerText.length + expressionElement.children.length >= 24
-      : firstChildElement.innerText.length + expressionElement.children.length >= 20
+      : firstChildElement.innerText.length + expressionElement.children.length >= 18
     ) {
       return true;
     } else {
