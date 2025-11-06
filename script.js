@@ -68,7 +68,7 @@ function checkLimit() {
   const firstChildElement = expressionElement.firstElementChild || '';
   if(firstChildElement) {
     if(
-      calculatorWidthNum > 400
+      calculatorWidthNum > 350
       ? firstChildElement.innerText.length + expressionElement.children.length >= 24
       : firstChildElement.innerText.length + expressionElement.children.length >= 18
     ) {
@@ -198,3 +198,4 @@ lightSwitch.addEventListener('click', () => {
     isLightOn = true;
   }
 });
+
